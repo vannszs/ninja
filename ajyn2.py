@@ -151,8 +151,7 @@ def perform_action(driver, error_count=0):
             
             # Limit jika terjadi kesalahan berulang
             if error_count >= 2:
-                driver.refresh()
-                driver = webdriver.Chrome()  # Membuka kembali browser
+                driver.refresh()  # Membuka kembali browser
                 perform_action(driver)
                 return False
 
