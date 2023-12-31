@@ -119,7 +119,7 @@ def perform_action(driver, error_count=0):
                     with open("user2.txt", "r", encoding='utf-8') as file:
                         usernames = [line.strip() for line in file.readlines()]
                         time.sleep(1)
-                    if current_username not in usernames or keys_text == "You hold 0 keys":
+                    if current_username not in usernames or (keys_text == "You hold 0 keys"):
                         i += 1
                         print(f"clicked {current_username}")
                         validator(current_username,i)
@@ -128,8 +128,7 @@ def perform_action(driver, error_count=0):
                         print(f"username  {current_username} already on the list ")
                         i += 1
                         break
-                    elif current_price == "0 INJ":
-                        print(f"clicked {current_username}")
+                    elif (current_price == "0 INJ"):
                         print(f"username  {current_username} the price is 0")
                         i += 1
                         break

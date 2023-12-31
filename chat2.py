@@ -7,7 +7,7 @@ import time
 from selenium.webdriver.common.keys import Keys
 # Set opsi untuk mempertahankan data sesi
 chrome_options = Options()
-chrome_options.add_argument("--user-data-dir=D:\\selenimu2")  # Ganti dengan direktori yang sesuai
+chrome_options.add_argument("--user-data-dir=D:\\chat2")  # Ganti dengan direktori yang sesuai
 
 # Inisialisasi WebDriver dengan opsi yang disetel
 driver = webdriver.Chrome(options=chrome_options)  # Ganti dengan WebDriver yang sesuai

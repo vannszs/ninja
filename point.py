@@ -90,7 +90,7 @@ def perform_action(driver, error_count=0):
     except FileNotFoundError:
         i = 2000  # Jika file count.txt belum ada
 
-    while i <= 5000:
+    while i <= 7000:
         try:
             driver.get('https://ninja.garden/leaderboard')
             time.sleep(3)
