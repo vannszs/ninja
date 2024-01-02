@@ -12,15 +12,19 @@ chrome_options.add_argument("--user-data-dir=D:\\chat2")  # Ganti dengan direkto
 # Inisialisasi WebDriver dengan opsi yang disetel
 driver = webdriver.Chrome(options=chrome_options)  # Ganti dengan WebDriver yang sesuai
 
+
 def cek_total(row):
     print("============ cek  row  ================")
     driver.get('https://ninja.garden/rooms')
+    row_error = 1
     while True:
         try:
             user_xpath = f'/html/body/div[2]/div/div/div[2]/div[{1}]'
             row_element = WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH, user_xpath)))
             break
         except:
+            if row_error > 10:
+                cek_total(row)
             print(f"menuggu row muncul")
             
 

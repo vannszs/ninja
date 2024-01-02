@@ -13,7 +13,6 @@ def validator(username,i):
     while True:
         print("================= VALIDATOR =================")
         init = 1
-        time.sleep(1)
         with open("count2.txt", "w") as count_file:
              count_file.write(str(i))  # Menulis nilai terakhir i ke count2.txt
         try:
@@ -38,7 +37,6 @@ def validator(username,i):
             print(f"buy key {username}")
             with open("count2.txt", "w") as count_file:
                 count_file.write(str(i+1))  # Menulis nilai terakhir i ke count2.txt
-            time.sleep(5)
             buy = True
 
 
@@ -100,10 +98,8 @@ def perform_action(driver, error_count=0):
             
             print(f"rank {i}")
             skip = 0
-            time.sleep(3)
             while True:
                 try:
-                    time.sleep(1)
                     keys_element_xpath = '/html/body/main/div/div/div/div[1]/div[2]'
                     keys_element = WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH, keys_element_xpath)))
                     keys_text = keys_element.text
@@ -118,7 +114,6 @@ def perform_action(driver, error_count=0):
 
                     with open("user2.txt", "r", encoding='utf-8') as file:
                         usernames = [line.strip() for line in file.readlines()]
-                        time.sleep(1)
                     if current_username not in usernames or (keys_text == "You hold 0 keys"):
                         i += 1
                         print(f"clicked {current_username}")
