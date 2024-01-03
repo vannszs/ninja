@@ -4,10 +4,10 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import time
-import json
 from selenium.common.exceptions import NoSuchElementException
 username = ''
-# import requests
+import requests
+import json
 
 # # Lakukan request ke API
 # response = requests.get("https://ninja.garden/api/points/leaderboard")
@@ -32,16 +32,16 @@ def validator(username,i):
     while True:
         print("================= VALIDATOR =================")
         init = 1
-        with open("count2.txt", "w") as count_file:
-             count_file.write(str(i))  # Menulis nilai terakhir i ke count2.txt
+        with open("count.txt", "w") as count_file:
+             count_file.write(str(i))  # Menulis nilai terakhir i ke count.txt
         try:
             
             first_button_xpath = '/html/body/main/div/div/div/div[1]/div[3]/div[2]/button'
             first_button = WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH, first_button_xpath)))
             first_button.click()
             print("first button clicked")
-            with open("count2.txt", "w") as count_file:
-                count_file.write(str(i-1))  # Menulis nilai terakhir i ke count2.txt
+            with open("count.txt", "w") as count_file:
+                count_file.write(str(i-1))  # Menulis nilai terakhir i ke count.txt
             
 
             second_button_xpath = '/html/body/div[5]/div[2]/div/div/div[2]/div/div/div/div/div/div/div[2]/button[1]'
@@ -54,8 +54,8 @@ def validator(username,i):
             third_button = WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH, third_button_xpath)))
             third_button.click()
             print(f"buy key {username}")
-            with open("count2.txt", "w") as count_file:
-                count_file.write(str(i+1))  # Menulis nilai terakhir i ke count2.txt
+            with open("count.txt", "w") as count_file:
+                count_file.write(str(i+1))  # Menulis nilai terakhir i ke count.txt
             buy = True
             price_xpath = '/html/body/main/div/div/div/div[1]/div[4]/div[1]/div[1]'
             price_element = WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH, price_xpath)))
@@ -91,8 +91,8 @@ def validator(username,i):
                     print(init)
                     print("mencari elemnt")
                     if init >= 3:
-                        with open("count2.txt", "w") as count_file:
-                            count_file.write(str(i-1))  # Menulis nilai terakhir i ke count2.txt
+                        with open("count.txt", "w") as count_file:
+                            count_file.write(str(i-1))  # Menulis nilai terakhir i ke count.txt
                         init = 1
                         perform_action(driver)
                     init += 1
@@ -107,10 +107,10 @@ def validator(username,i):
             continue
 
 
-def perform_action(driver):
+def perform_action(driver, error_count=0):
     print("================ PERFORM ==================")
     try:
-        with open("count2.txt", "r") as count_file:
+        with open("count.txt", "r") as count_file:
             i = int(count_file.read().strip())
     except FileNotFoundError:
         i = 2000
@@ -122,7 +122,7 @@ def perform_action(driver):
             profile_url = f"{base_url}{ids[i]}"
             driver.get(profile_url)
             time.sleep(1)
-            username_xpath = '/html/body/main/div/div/div/div[1]/div[3]/div[1]/div[2]'
+            username_xpath = '/html/body/main/div/div/div/div[1]/div[3]/div[1]/div[1]'
             username_element = WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH, username_xpath)))
             current_username = username_element.text
             
@@ -163,8 +163,8 @@ def perform_action(driver):
 
         except Exception as e:
             print(e)
-            with open("count2.txt", "w") as count_file:
-                count_file.write(str(i))  # Menulis nilai terakhir i ke count2.txt
+            with open("count.txt", "w") as count_file:
+                count_file.write(str(i))  # Menulis nilai terakhir i ke count.txt
             if error_count >= 2:
                 driver.refresh()
   # Membuka kembali browser
@@ -184,7 +184,7 @@ def perform_action(driver):
 
 # Set opsi untuk mempertahankan data sesi
 chrome_options = Options()
-chrome_options.add_argument("--user-data-dir=D:\\selenium2")  # Ganti dengan direktori yang sesuai
+chrome_options.add_argument("--user-data-dir=D:\\selenium")  # Ganti dengan direktori yang sesuai
 
 # Inisialisasi WebDriver dengan opsi yang disetel
 driver = webdriver.Chrome(options=chrome_options)  # Ganti dengan WebDriver yang sesuai
