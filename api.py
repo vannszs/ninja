@@ -7,25 +7,47 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+import json
 
-def get_owner_ids():
-    url = "https://ninja.garden/api/rooms/new"
-    response = requests.get(url)
+import json
 
-    owner_ids = []
+# Try reading the file using UTF-8 encoding
+with open('newmem.json', 'r', encoding='utf-8') as file:
+    json_data = json.load(file)
 
-    if response.status_code == 200:
-        data = response.json()
-        if data["status"] == "success":
-            for room_data in data["data"]:
-                owner_id = room_data["stats"]["owner_id"]
-                owner_ids.append(owner_id)
-        else:
-            print("Gagal mendapatkan data dari API")
-    else:
-        print("Gagal melakukan permintaan ke API")
+# Extracting IDs from the loaded JSON
+ids = [item['user']['id'] for item in json_data]
 
-    return owner_ids
+def remove_id_from_newmem_and_append_to_leaderboard(id_to_remove):
+    # Baca data dari newmem.json
+    with open('newmem.json', 'r') as file:
+        newmem_data = json.load(file)
+
+    # Cari data yang sesuai dengan ID yang akan dihapus
+    data_to_remove = None
+    for item in newmem_data:
+        if item["user"]["id"] == id_to_remove:
+            data_to_remove = item
+            break
+
+    if data_to_remove:
+        # Hapus data dari newmem.json
+        newmem_data.remove(data_to_remove)
+
+        # Baca data dari leaderboard.json
+        with open('leaderboard.json', 'r') as file:
+            leaderboard_data = json.load(file)
+
+        # Tambahkan data yang akan dihapus ke leaderboard.json
+        leaderboard_data.append(data_to_remove)
+
+        # Simpan kembali leaderboard.json dengan data baru
+        with open('leaderboard.json', 'w') as file:
+            json.dump(leaderboard_data, file)
+
+        # Simpan kembali newmem.json tanpa data yang dihapus
+        with open('newmem.json', 'w') as file:
+            json.dump(newmem_data, file)
 
 def validator(username,i):
     err = 1
@@ -66,29 +88,28 @@ def validator(username,i):
                         gagal +=1
                         i+=1
                         if gagal == 5:
-                            visit_profiles_with_selenium(owners,i)
+                            visit_profiles_with_selenium(ids,i)
                         break
                     elif "Successfully bought keys!" in message:
                         print("Transaksi berhasil!")
-                        i += 1
                         with open("username.txt", "a", encoding='utf-8') as file:
                             file.write(username + "\n")
-                        visit_profiles_with_selenium(owners,i)
+                        visit_profiles_with_selenium(ids,i)
                 except:
                     print(init)
                     print("mencari elemnt")
                     if init >= 3:
                         init = 1
                         i+=1
-                        visit_profiles_with_selenium(owners,i)
+                        visit_profiles_with_selenium(ids,i)
                     init += 1
                     continue
                 
         except Exception as e:
             print(e)
             driver.refresh()
-            if err ==20:
-                visit_profiles_with_selenium(owners)
+            if err ==3:
+                visit_profiles_with_selenium(ids,i)
             err += 1
             continue
 
@@ -113,7 +134,7 @@ def visit_profiles_with_selenium(owner_ids,i):
                 current_price = price_element.text
                 print(f"{current_username}key price is {current_price}")
                 
-                with open("user.txt", "r", encoding='utf-8') as file:
+                with open("username.txt", "r", encoding='utf-8') as file:
                     usernames = [line.strip() for line in file.readlines()]
                 if current_username not in usernames or (keys_text == "You hold 0 keys"):
                     i += 1
@@ -150,6 +171,6 @@ chrome_options.add_argument("--user-data-dir=D:\\selenium")
 driver = webdriver.Chrome(options=chrome_options)
 # Mengambil owner IDs
 
-owners = get_owner_ids()
+
 # Mengunjungi profil masing-masing owner menggunakan Selenium
-visit_profiles_with_selenium(owners,1)
+visit_profiles_with_selenium(ids,1)
