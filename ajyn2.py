@@ -21,7 +21,7 @@ username = ''
 # else:
 #     print("Failed to fetch data from the API")
 
-with open('leaderboard.json', 'r') as file:
+with open('leaderboard.json', 'r',encoding='utf-8') as file:
     json_data = json.load(file)
 
 ids = [item['user']['id'] for item in json_data['data']]
@@ -57,9 +57,15 @@ def validator(username,i):
             with open("count2.txt", "w") as count_file:
                 count_file.write(str(i+1))  # Menulis nilai terakhir i ke count2.txt
             buy = True
+            time.sleep(1)
             price_xpath = '/html/body/main/div/div/div/div[1]/div[4]/div[1]/div[1]'
             price_element = WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH, price_xpath)))
             current_price = str(price_element.text)
+            if current_price == "0 INJ":
+                print(f"username  {username} the price is 0")
+                with open("count.txt", "w") as count_file:
+                    count_file.write(str(i))  # Menulis nilai terakhir i ke count.txt
+                perform_action(driver)
 
 
             while True:
@@ -125,7 +131,18 @@ def perform_action(driver):
             username_xpath = '/html/body/main/div/div/div/div[1]/div[3]/div[1]/div[2]'
             username_element = WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH, username_xpath)))
             current_username = username_element.text
-            
+            for i in range(0,2):
+                try:
+                    trade_xpath = '/html/body/main/div/div/div/div[3]/div'
+                    trade_element = WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH, trade_xpath)))
+                    trade_text = trade_element.text
+                    if trade_text == "No data found":
+                        i+=i
+                        with open("count.txt", "w") as count_file:
+                            count_file.write(str(i))  # Menulis nilai terakhir i ke count.txt
+                        perform_action(driver)
+                except:
+                    continue
             print(f"rank {i}")
             skip = 0
             while True:
