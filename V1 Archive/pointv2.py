@@ -22,7 +22,7 @@ import json
 # else:
 #     print("Failed to fetch data from the API")
 
-with open("leaderboard.json", "r", encoding="utf-8") as file:
+with open("V1 Archive/leaderboard.json", "r", encoding="utf-8") as file:
     json_data = json.load(file)
 
 ids = [item["user"]["id"] for item in json_data["data"]]
@@ -34,8 +34,8 @@ def validator(username, i):
     while True:
         print("================= VALIDATOR =================")
         init = 1
-        with open("count.txt", "w") as count_file:
-            count_file.write(str(i))  # Menulis nilai terakhir i ke count.txt
+        with open("V1 Archive/V1 Archive/count.txt", "w") as count_file:
+            count_file.write(str(i))  # Menulis nilai terakhir i ke V1 Archive/count.txt
         try:
             price_xpath = "/html/body/main/div/div/div/div[1]/div[4]/div[1]/div[1]"
             price_element = WebDriverWait(driver, 10).until(
@@ -47,18 +47,18 @@ def validator(username, i):
                 EC.visibility_of_element_located((By.XPATH, trade_xpath))
             )
             trade_text = trade_element.text
-            with open("username.txt", "r", encoding="utf-8") as file:
+            with open("V1 Archive/username.txt", "r", encoding="utf-8") as file:
                 usernames = [line.strip() for line in file.readlines()]
-            if (current_price == "0 INJ") or (trade_text == "No data found"):
+            if (current_price == "0 INJ") and (trade_text == "No data found"):
                 print(f"username  {username} the price is 0")
-                with open("count.txt", "w") as count_file:
-                    count_file.write(str(i))  # Menulis nilai terakhir i ke count.txt
+                with open("V1 Archive/count.txt", "w") as count_file:
+                    count_file.write(str(i))  # Menulis nilai terakhir i ke V1 Archive/count.txt
                 perform_action(driver)
             elif username in usernames:
                 print(f"clicked {username}")
                 print(f"username  {username} already on the list ")
-                with open("count.txt", "w") as count_file:
-                    count_file.write(str(i))  # Menulis nilai terakhir i ke count.txt
+                with open("V1 Archive/count.txt", "w") as count_file:
+                    count_file.write(str(i))  # Menulis nilai terakhir i ke V1 Archive/count.txt
 
             first_button_xpath = (
                 "/html/body/main/div/div/div/div[1]/div[3]/div[2]/button"
@@ -68,8 +68,8 @@ def validator(username, i):
             )
             first_button.click()
             print("first button clicked")
-            with open("count.txt", "w") as count_file:
-                count_file.write(str(i - 1))  # Menulis nilai terakhir i ke count.txt
+            with open("V1 Archive/count.txt", "w") as count_file:
+                count_file.write(str(i - 1))  # Menulis nilai terakhir i ke V1 Archive/count.txt
 
             second_button_xpath = "/html/body/div[5]/div[2]/div/div/div[2]/div/div/div/div/div/div/div[2]/button[1]"
             second_button = WebDriverWait(driver, 10).until(
@@ -84,8 +84,8 @@ def validator(username, i):
             )
             third_button.click()
             print(f"buy key {username}")
-            with open("count.txt", "w") as count_file:
-                count_file.write(str(i + 1))  # Menulis nilai terakhir i ke count.txt
+            with open("V1 Archive/count.txt", "w") as count_file:
+                count_file.write(str(i + 1))  # Menulis nilai terakhir i ke V1 Archive/count.txt
             buy = True
             time.sleep(1)
 
@@ -108,15 +108,15 @@ def validator(username, i):
                             time.sleep(2)
                             if current_price == "0 INJ":
                                 print(f"username  {username} the price is 0")
-                                with open("count.txt", "w") as count_file:
+                                with open("V1 Archive/count.txt", "w") as count_file:
                                     count_file.write(
                                         str(i)
-                                    )  # Menulis nilai terakhir i ke count.txt
+                                    )  # Menulis nilai terakhir i ke V1 Archive/count.txt
                                 perform_action(driver)
                         break
                     elif "Successfully bought keys!" in message:
                         print("Transaksi berhasil!")
-                        with open("username.txt", "a", encoding="utf-8") as file:
+                        with open("V1 Archive/username.txt", "a", encoding="utf-8") as file:
                             file.write(username + "\n")
                         perform_action(driver)
 
@@ -124,10 +124,10 @@ def validator(username, i):
                     print(init)
                     print("mencari elemnt")
                     if init >= 3:
-                        with open("count.txt", "w") as count_file:
+                        with open("V1 Archive/count.txt", "w") as count_file:
                             count_file.write(
                                 str(i - 1)
-                            )  # Menulis nilai terakhir i ke count.txt
+                            )  # Menulis nilai terakhir i ke V1 Archive/count.txt
                         init = 1
                         perform_action(driver)
                     init += 1
@@ -145,7 +145,7 @@ def validator(username, i):
 def perform_action(driver, error_count=0):
     print("================ PERFORM ==================")
     try:
-        with open("count.txt", "r") as count_file:
+        with open("V1 Archive/count.txt", "r") as count_file:
             i = int(count_file.read().strip())
     except FileNotFoundError:
         i = 2000
@@ -178,9 +178,9 @@ def perform_action(driver, error_count=0):
                         EC.visibility_of_element_located((By.XPATH, trade_xpath))
                     )
                     trade_text = trade_element.text
-                    if (current_price == "0 INJ") or (trade_text == "No data found"):
+                    if(trade_text == "No data found"):
                         print(f"username  {current_username} the price is 0")
-                        with open("count.txt", "w") as count_file:
+                        with open("V1 Archive/count.txt", "w") as count_file:
                             count_file.write(
                                 str(i + 1)
                             )  # Menulis nilai terakhir i ke count2.txt
@@ -198,7 +198,7 @@ def perform_action(driver, error_count=0):
                     )
                     current_price = str(price_element.text)
                     time.sleep(2)
-                    with open("username.txt", "r", encoding="utf-8") as file:
+                    with open("V1 Archive/username.txt", "r", encoding="utf-8") as file:
                         usernames = [line.strip() for line in file.readlines()]
                     print(f"{current_username}key price is {current_price}")
 
@@ -226,8 +226,8 @@ def perform_action(driver, error_count=0):
 
         except Exception as e:
             print(e)
-            with open("count.txt", "w") as count_file:
-                count_file.write(str(i))  # Menulis nilai terakhir i ke count.txt
+            with open("V1 Archive/count.txt", "w") as count_file:
+                count_file.write(str(i))  # Menulis nilai terakhir i ke V1 Archive/count.txt
             if error_count >= 2:
                 driver.refresh()
                 # Membuka kembali browser
@@ -244,9 +244,7 @@ def perform_action(driver, error_count=0):
 chrome_options = Options()
 chrome_options.add_argument(
     "--user-data-dir=D:\\selenium"
-)  # Ganti dengan direktori yang sesuai
-
-# Inisialisasi WebDriver dengan opsi yang disetel
+) 
 driver = webdriver.Chrome(options=chrome_options)  # Ganti dengan WebDriver yang sesuai
 
 init = 0
