@@ -22,7 +22,7 @@ Absolutely, here's a spruced-up and more visually engaging version of the descri
 |------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | 🏆 Leaderboard Scraper | Fetches data from the exciting and competitive Ninja Garden leaderboard!                                                                                        |
 | 🕵️ Transaction Explorer| Scours through the Ninja Garden Explorer to dig out transaction history for thorough investigation.                                                            |
-| 🌐 API Integrations(v1.9) Pulls data from the leaderboard API and seamlessly navigates to profiles for faster processing, skipping the full leaderboard page load.   |
+| 🌐 API Integrations(v1.9)| Pulls data from the leaderboard API and seamlessly navigates to profiles for faster processing, skipping the full leaderboard page load.   |
 | 💬 Auto Chat            | Initiates automatic chat interactions in the "Room" to efficiently farm those daily points.                                                                    |
 | 🛒 Auto Buy Key        | Intelligently checks target usernames, verifies key purchases, and iterates through successful transactions for optimal key acquisitions.                     |
 
