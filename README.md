@@ -26,7 +26,7 @@ Absolutely, here's a spruced-up and more visually engaging version of the descri
 | 💬 Auto Chat            | Initiates automatic chat interactions in the "Room" to efficiently farm those daily points.                                                                    |
 | 🛒 Auto Buy Key        | Intelligently checks target usernames, verifies key purchases, and iterates through successful transactions for optimal key acquisitions.                     |
 
-### Version 2 (V2 - Latest)
+### Version 2 (V2 - Alpha)
 | Features                         | Description                                                                                                                             |
 |----------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------|
 | 👤 Profile Visitor                | Pays a visit to specified profiles based on unique IDs, a feature geared for comprehensive exploration.                                  |
@@ -34,7 +34,7 @@ Absolutely, here's a spruced-up and more visually engaging version of the descri
 | ⚙️ Improved Transaction Handling | Overhauls transaction execution, irons out all bugs from v1, and brings a smoother, refined experience.                                |
 | 🆔 Conversion to User ID          | Alpha version - Converts usernames to the USER_ID format for quicker processing, ideal for users familiar with v1 operations.           |
 | 🔄 Adjustment in API Integrations | Refined API interactions, now swiftly extracting data from the leaderboard API and speeding up profile navigation like never before.    |
-| 💬 Adjustment in Auto Chat        | Upgraded auto chat in the "Room," now with bug fixes from v1 to ensure seamless daily point collection.                                 |
+| 💬 Adjustment in Auto Chat (Soon in v2.0)        | Upgraded auto chat in the "Room," now with bug fixes from v1 to ensure seamless daily point collection.                                 |
 
 These engaging descriptions highlight the enhanced functionalities and improvements introduced in each version, making your Ninja Automation Tools even more captivating!
 
