@@ -42,6 +42,7 @@ def Validator(i,id,ids):
 
 def Transaction(id):
      patient_zero = 0
+     success = False
      
      while True:
         print("================= TRANSACTION PHASE =================")
@@ -81,27 +82,29 @@ def Transaction(id):
                 message = element.text
                 if "Failed to buy keys!" in message:
                     print("Transaksi gagal, menjalankan perform_action lagi.")
-
                     if ("0 INJ" in  current_price) and (patient_zero <= 5):
                         print("Zero Price Detected")
                         if id not in zero:
                             with open("zero.txt", "a", encoding="utf-8") as file:
                                 file.write(f"{id}\n")
                         patient_zero += 1
-                        break
-
-                    elif patient_zero >5:
+                        success = True
                         break
                 elif "Successfully bought keys!" in message:
+                    success = True
                     print("Transaksi berhasil!")
                     with open("done.txt", "a", encoding="utf-8") as file:
                         file.write(f"{id}\n")
                     break
-                pass
+                break
+                success = False
             except:
                 print("mencari elemnt")
                 continue
-        break
+        if success:
+            break
+        else:
+            continue
 
 
 
