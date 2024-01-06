@@ -25,14 +25,18 @@ Experience the power of automation! These scripts provide diverse functionalitie
 | 🛒 Auto Buy Key        | Intelligently handles key purchases, optimizing transactions with targeted users.                 |
 
 ### Version 2 (V2 - Latest)
-| Features                         | Description                                                                                      |
-|----------------------------------|--------------------------------------------------------------------------------------------------|
-| 👤 Profile Visitor                | Explores specified profiles based on unique IDs.                                                   |
-| 🛍️ Auto Buy Key                  | Streamlines key purchases by managing a checklist of previously bought IDs.                       |
-| ⚙️ Improved Transaction Handling | Enhances transaction execution, refining the experience from previous versions.                   |
-| 🆔 Conversion to User ID          | Alpha version - Converts usernames to USER_ID format for streamlined processing.                  |
-| 🔄 Adjustment in API Integrations | Improved API interactions for quicker data extraction and navigation.                              |
-| 💬 Adjustment in Auto Chat        | Upgraded auto chat capabilities with bug fixes for seamless daily point collection.                |
+| Features                                 | Description                                                                                      |
+|------------------------------------------|--------------------------------------------------------------------------------------------------|
+| 👤 Profile Visitor                        | Explores specified profiles based on unique IDs.                                                   |
+| 🛍️ Auto Buy Key                          | Streamlines key purchases by managing a checklist of previously bought IDs.                       |
+| ⚙️ Improved Transaction Handling         | Enhances transaction execution, refining the experience from previous versions.                   |
+| 🆔 Conversion to User ID (Use 2.0-alpha) | Alpha version - Converts usernames to USER_ID format for streamlined processing.                  |
+| 🔄 Adjustment in API Integrations         | Improved API interactions for quicker data extraction and navigation.                              |
+| 💬 Adjustment in Auto Chat                | Upgraded auto chat capabilities with bug fixes for seamless daily point collection.               |
+| 🏎️ Less Code, Faster Performance         | This update turbocharges the code, running 10x faster than the previous version.                   |
+| 🔍 Zero Price Key Detector               | Enhanced from the prior version, this feature sifts through 0-price keys and stores IDs for future purchase. |
+| 🧹 Reduced RAM Consumption               | Optimized by revamping algorithms for a smoother PC performance.                                    |
+
 
 ## 📄 License
 
