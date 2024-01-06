@@ -26,6 +26,8 @@ def Validator(i,usernames):
                 with open("done.txt", "a") as id_user:
                     id_user.write(f"{ids[i]}\n")  # Menulis ID ke file
                 print("Username Found and wrote the ID")
+            else:
+                print("Username Not Found, Skip to Next User")
 
 
             break
