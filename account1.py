@@ -6,6 +6,7 @@ from selenium.webdriver.support import expected_conditions as EC
 import time
 from selenium.common.exceptions import NoSuchElementException
 import json
+import requests
 
  
 def Validator(i,id,ids):
@@ -110,12 +111,21 @@ def Transaction(id):
 
 username = ""
 chrome_options = Options()
-chrome_options.add_argument("--user-data-dir=D:\\selenium")
+chrome_options.add_argument("--user-data-dir=D:\\selenimu2")
 driver = webdriver.Chrome(options=chrome_options)
 
-with open("leaderboard.json", "r", encoding="utf-8") as file:
-    json_data = json.load(file)
-ids = [item["user"]["id"] for item in json_data["data"]]
+# with open("leaderboard.json", "r", encoding="utf-8") as file:
+#     json_data = json.load(file)
+# ids = [item["user"]["id"] for item in json_data["data"]]
+
+response = requests.get("https://ninja.garden/api/points/leaderboard", proxies=proxy)
+
+# Pastikan request berhasil dan responsenya valid
+if response.status_code == 200:
+    data = response.json()["data"]
+
+    # Ambil nilai id dari setiap objek dalam data
+    ids = [entry["user"]["id"] for entry in data]
 
 
 try:
@@ -137,3 +147,5 @@ while i != total_ids:
     i+=1
     with open("count.txt", "w") as counter:
         counter.write(str(i))
+
+driver.quit()
