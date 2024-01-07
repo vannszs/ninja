@@ -34,7 +34,7 @@ Experience the power of automation! These scripts provide diverse functionalitie
 | 🔄 Adjustment in API Integrations         | Improved API interactions for quicker data extraction and navigation.                              |
 | 💬 Adjustment in Auto Chat (Soon)                | Upgraded auto chat capabilities with bug fixes for seamless daily point collection.               |
 | 🏎️ Less Code, Faster Performance         | This update turbocharges the code, running 10x faster than the previous version.                   |
-| 🔍 Zero Price Key Detector               | Enhanced from the prior version, this feature sifts through 0-price keys and stores IDs for future purchase. |
+| 🔍 Zero Price Key Detector (Archived)             | Enhanced from the prior version, this feature sifts through 0-price keys and stores IDs for future purchase. |
 | 🧹 Reduced RAM Consumption               | Optimized by revamping algorithms for a smoother PC performance.                                    |
 
 
