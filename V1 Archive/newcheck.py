@@ -17,8 +17,4 @@ if response.status_code == 200:
     # Ambil nilai id dari setiap objek dalam data
     ids = [entry["user"]["id"] for entry in data]
 
-    # Simpan IDs ke dalam file sebagai array
-    with open('newmem.json', 'w') as file:
-        json.dump(ids, file)
-else:
-    print("Failed to fetch data from the API")
+print(ids)

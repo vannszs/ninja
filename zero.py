@@ -8,17 +8,17 @@ from selenium.common.exceptions import NoSuchElementException
 import json
 
  
-def Validator(i,id,ids):
+def Validator(i,id):
     print("========== THIS IS VALIDATOR PHASE ============")
     patient_zero = 0
 
     while True:
         try:
-            if ids[i] in id:
+            if zero[i] in id:
                 print(f"ID Found of rank {i}, Skip to Next User")
                 break
             profile_url = "https://ninja.garden/profile/"
-            url = f"{profile_url}{ids[i]}"
+            url = f"{profile_url}{zero[i]}"
             print(f"Visit Rank {i}")
             driver.get(url)
 
@@ -33,14 +33,14 @@ def Validator(i,id,ids):
                 i+=1
                 continue
             else:
-                Transaction(ids[i])
+                Transaction(zero[i])
             break
         except Exception as e:
             print(e)
             print("Error Happened or fail to find xpath element")
             continue
 
-def Transaction(id):
+def Transaction(idz):
      patient_zero = 0
      success = False
      
@@ -66,7 +66,7 @@ def Transaction(id):
             EC.visibility_of_element_located((By.XPATH, third_button_xpath))
         )
         third_button.click()
-        print(f"buy key of {id}")
+        print(f"buy key of {idz}")
         price_xpath = ( "/html/body/main/div/div/div/div[1]/div[4]/div[1]/div[1]")
         price_element = WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH, price_xpath)))
         current_price = str(price_element.text)
@@ -85,16 +85,27 @@ def Transaction(id):
                     if ("0 INJ" in  current_price) and (patient_zero <= 5):
                         print("Zero Price Detected")
                         if id not in zero:
-                            with open("zero2.txt", "a", encoding="utf-8") as file:
-                                file.write(f"{id}\n")
+                            with open("zero.txt", "a", encoding="utf-8") as file:
+                                file.write(f"{idz}\n")
                         patient_zero += 1
                         success = True
                         break
                 elif "Successfully bought keys!" in message:
                     success = True
                     print("Transaksi berhasil!")
-                    with open("done2.txt", "a", encoding="utf-8") as file:
-                        file.write(f"{id}\n")
+                    with open("done.txt", "a", encoding="utf-8") as file:
+                        file.write(f"{idz}\n")
+                
+                    # Remove ID from zero.txt if it exists
+                    if idz in zero or idz in id:
+                        with open("zero.txt", "r", encoding="utf-8") as file:
+                            lines = file.readlines()
+                        with open("zero.txt", "w", encoding="utf-8") as file:
+                            for line in lines:
+                                if line.strip() != id:
+                                    file.write(line)
+                        zero.remove(id)  # Remove ID from zero list in memory
+                
                     break
                 break
                 success = False
@@ -110,7 +121,7 @@ def Transaction(id):
 
 username = ""
 chrome_options = Options()
-chrome_options.add_argument("--user-data-dir=D:\\selenium2")
+chrome_options.add_argument("--user-data-dir=D:\\selenimu2")
 driver = webdriver.Chrome(options=chrome_options)
 
 with open("leaderboard.json", "r", encoding="utf-8") as file:
@@ -118,24 +129,20 @@ with open("leaderboard.json", "r", encoding="utf-8") as file:
 ids = [item["user"]["id"] for item in json_data["data"]]
 
 
-try:
-    with open("count2.txt", "r") as count_file:
-        i = int(count_file.read().strip())
-except FileNotFoundError:
-    i = 2000
-
+with open("done.txt", "r", encoding="utf-8") as file:
+    id= [line.strip() for line in file.readlines()]
+i = 1
 total_ids = len(ids)
 
-with open("done2.txt", "r", encoding="utf-8") as file:
-    id = [line.strip() for line in file.readlines()]
+with open("zero.txt", "r", encoding="utf-8") as file:
+    lines = file.readlines()
+    zero = [line.strip() for line in lines]
 
-with open("zero2.txt", "r", encoding="utf-8") as file:
-    zero = [line.strip() for line in file.readlines()]
+
 
 while i != total_ids:
-    Validator(i,id,ids)
+    Validator(i,id)
     i+=1
-    with open("count2.txt", "w") as counter:
+    with open("count.txt", "w") as counter:
         counter.write(str(i))
-
 driver.quit()
