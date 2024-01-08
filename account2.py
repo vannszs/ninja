@@ -11,32 +11,37 @@ import json
 def Validator(i,id,ids):
     print("========== THIS IS VALIDATOR PHASE ============")
     patient_zero = 0
-
+    if ids[i] in id:
+        print(f"ID Found of rank {i}, Skip to Next User")
+        return i
+    profile_url = "https://ninja.garden/profile/"
+    url = f"{profile_url}{ids[i]}"
+    driver.get(url)
     while True:
         try:
-            if ids[i] in id:
-                print(f"ID Found of rank {i}, Skip to Next User")
-                break
-            profile_url = "https://ninja.garden/profile/"
-            url = f"{profile_url}{ids[i]}"
-            print(f"Visit Rank {i}")
-            driver.get(url)
-
             price_xpath = ( "/html/body/main/div/div/div/div[1]/div[4]/div[1]/div[1]")
             price_element = WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH, price_xpath)))
             current_price = str(price_element.text)
             
+            trade_xpath = "/html/body/main/div/div/div/div[3]/div"
+            trade_elm  = WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH, trade_xpath)))
+            trade_stat = trade_elm.text
+            first_button_xpath = (
+                "/html/body/main/div/div/div/div[1]/div[3]/div[2]/button"
+        )
+            print(f"Visit Rank {i}  with {current_price} Price")
+            
             if ("0 INJ" in  current_price) and (patient_zero <= 5):
                 patient_zero += 1
                 continue
-            elif patient_zero >= 5:
-                i+=1
-                continue
+            elif patient_zero >= 5 and ("No data found" in trade_stat):
+                break
             else:
                 Transaction(ids[i])
             break
         except Exception as e:
-            print(e)
+            # if patient_zero == 20:
+            #     break
             print("Error Happened or fail to find xpath element")
             continue
 
@@ -97,9 +102,12 @@ def Transaction(id):
                         file.write(f"{id}\n")
                     break
                 break
-                success = False
             except:
                 print("mencari elemnt")
+                patient_zero +=1
+                if patient_zero == 10:
+                    driver.refresh
+                    Transaction(id)
                 continue
         if success:
             break
